@@ -4,6 +4,10 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+const axios = require('axios').default;
+
+const url = "https://jpheulpin-5000.theiadocker-2-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"
+
 function doesExit(username) {
     let usersWithSameName = users.filter((user) => user.username == username);
     if (usersWithSameName.length > 0) {
@@ -65,5 +69,35 @@ public_users.get('/title/:title',function (req, res) {
 public_users.get('/review/:isbn',function (req, res) {
     return res.send(books[req.params.isbn].reviews)
 });
+
+async function BookFromISBN(ISBN) {
+    axios.get(url + `/isbn/${ISBN}`)
+    .then(function (response) {
+        console.log(response.data);
+     })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+async function BookFromAuthor(author) {
+    axios.get(url + `/author/${author}`)
+    .then(function (response) {
+        console.log(response.data);
+     })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+async function BookFromTitle(title) {
+    axios.get(url + `/title/${title}`)
+    .then(function (response) {
+        console.log(response.data);
+     })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
 
 module.exports.general = public_users;
