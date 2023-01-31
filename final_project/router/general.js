@@ -70,6 +70,16 @@ public_users.get('/review/:isbn',function (req, res) {
     return res.send(books[req.params.isbn].reviews)
 });
 
+async function Books() {
+    axios.get(url + `/`)
+    .then(function (response) {
+        console.log(response.data);
+     })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
 async function BookFromISBN(ISBN) {
     axios.get(url + `/isbn/${ISBN}`)
     .then(function (response) {
